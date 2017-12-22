@@ -4,7 +4,7 @@ const chaiHttp = require('chai-http');
 global describe, before, after, it
 
 */
-const {app, runServer, closeServer} = require('../server');
+const {app, runServer, closeServer} = require('../index');
 
 // this lets us use *should* style syntax in our tests
 // so we can do things like `(1 + 1).should.equal(2);`
@@ -17,7 +17,7 @@ const should = chai.should();
 chai.use(chaiHttp);
 
 
-describe('Recipes', function(){
+describe("Blog Posts", function(){
     // Before our tests run, we activate the server. Our `runServer`
     // function returns a promise, and we return the that promise by
     // doing `return runServer`. If we didn't return a promise here,
@@ -47,40 +47,52 @@ describe('Recipes', function(){
             });
     });
 
-    // it('should POST a recipe to the site and return a new object', function(){
-    //     return chai.request(app)
-    //         .post('/recipes')
-    //         .send({name: 'latte', ingredients: ['espresso','milk']})
-    //         .then(function(res){
-    //             res.should.have.status(201);
-    //             res.should.be.json;
-    //             res.body.should.include.keys('id', 'name','ingredients' );
-    //         });
-    // });
-    //
-    // it('should DELETE a recipe given an Id', function(){
-    //     return chai.request(app)
-    //         .get('/recipes')
-    //         .then(function(res){
-    //             return chai.request(app)
-    //                 .delete('/recipes/${res.body[0].id}');
-    //         })
-    //         .then(function(res){
-    //             res.should.have.status(204);
-    //         });
-    // });
-    //
-    // it('should PUT a set of changes to a recipe given an Id', function(){
-    //     return chai.request(app)
-    //         .get('/recipes')
-    //         .then(function(res){
-    //             const rId = res.body[0].id;
-    //             return chai.request(app)
-    //                 .put(`/recipes/${rId}`)
-    //                 .send({id: rId, name:'This is a test', ingredients: ['a','b']})
-    //                 .then(function(res){
-    //                     res.should.have.status(204);
-    //                 });
-    //         });
-    // });
+    it('should POST all blog posts', function(){
+        return chai.request(app)
+            .post('/blog-posts')
+            .send({
+              "id": "86" ,
+            	"title": "Bitcoin reach a million dollars!! OMFG.",
+            	"content" : "Magic Happened." ,
+            	 "author": "One",
+            	 "publishDate": "12-12-18"
+            })
+            .then(function(res){
+                res.should.have.status(201);
+                res.should.be.json;
+                res.body.should.include.keys('id', 'author','title', "publishDate", "content");
+            });
+    });
+
+    it('should DELETE a blog post', function(){
+        return chai.request(app)
+            .get('/blog-posts')
+            .then(function(res){
+                return chai.request(app)
+                    .delete(`/blog-posts/${res.body[0].id}`);
+            })
+            .then(function(res){
+                res.should.have.status(204);
+            });
+    });
+
+    it('should PUT a set of changes to a blog post', function(){
+        return chai.request(app)
+            .get('/blog-posts')
+            .then(function(res){
+                const rId = res.body[0].id;
+                return chai.request(app)
+                    .put(`/blog-posts/${rId}`)
+                    .send({
+                          "id": rId ,
+                          "title": "Litecoin drops to a dollar!!!! OMFG.",
+                          "content" : "Hackers Happened." ,
+                          "author": "One",
+                           "publishDate": "12-12-20"
+                                })
+                    .then(function(res){
+                        res.should.have.status(204);
+                    });
+            });
+    });
 });
