@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thinkful-ei17/david-vernon-dec20.git"
+    "url": "git+https://github.com/thinkful-ei17/abraham-vernon-continuous-integration.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/thinkful-ei17/david-vernon-dec20/issues"
+    "url": "https://github.com/thinkful-ei17/abraham-vernon-continuous-integration.git"
   },
-  "homepage": "https://github.com/thinkful-ei17/david-vernon-dec20#readme",
+  "homepage": "https://github.com/thinkful-ei17/abraham-vernon-continuous-integration.git#readme",
   "dependencies": {
     "cors": "^2.8.4",
     "express": "^4.16.2",
